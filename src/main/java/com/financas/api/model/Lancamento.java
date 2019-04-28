@@ -23,6 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.financas.api.enums.StatusEnum;
 import com.financas.api.enums.TipoLancamentoEnum;
 
@@ -52,6 +53,7 @@ public class Lancamento {
 	private BigDecimal valor;
 
 	@NotNull
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data", nullable = false)
 	private LocalDate data;
@@ -68,11 +70,11 @@ public class Lancamento {
 	private BigDecimal vlrParcelas;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "status")
+	@Column(name = "status", nullable = false)
 	private StatusEnum status;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo")
+	@Column(name = "tipo", nullable = false)
 	private TipoLancamentoEnum tipo;
 
 	public Categoria getCategoria() {

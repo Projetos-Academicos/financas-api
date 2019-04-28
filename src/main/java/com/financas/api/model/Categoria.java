@@ -27,7 +27,7 @@ public class Categoria {
 	private String nome;
 
 	@Size(min = 3)
-	@Column(name = "descricao", columnDefinition = "text")
+	@Column(name = "descricao", columnDefinition = "text", nullable = false)
 	private String descricao;
 
 	public String getDescricao() {
