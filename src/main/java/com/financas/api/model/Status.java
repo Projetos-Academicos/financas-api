@@ -13,52 +13,48 @@ import org.hibernate.envers.Audited;
 
 @Entity
 @Audited
-@Table(name = "categoria")
-public class Categoria {
+@Table(name = "status")
+public class Status {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_categoria")
-	@SequenceGenerator(name = "seq_categoria", sequenceName = "seq_categoria", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_status")
+	@SequenceGenerator(name = "seq_status", sequenceName = "seq_status", allocationSize = 1)
 	@Column(name = "id")
 	private Long id;
 
-	@Size(min = 3, max = 30)
-	@Column(name = "nome", nullable = false, unique = true)
+	@Size(min=3)
+	@Column(name = "nome", nullable = false)
 	private String nome;
 
-	@Size(min = 3)
-	@Column(name = "descricao", columnDefinition = "text", nullable = false)
+	@Column(name = "descricao", columnDefinition = "text")
 	private String descricao;
 
-	public Categoria() {
+	public Status() {
 
 	}
 
-	public Categoria(Long id) {
+	public Status(Long id) {
 		this.setId(id);
 	}
+
 
 	public String getDescricao() {
 		return this.descricao;
 	}
-
 	public Long getId() {
 		return this.id;
 	}
-
 	public String getNome() {
 		return this.nome;
 	}
-
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 }

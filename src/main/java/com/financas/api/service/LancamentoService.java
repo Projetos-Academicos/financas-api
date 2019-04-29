@@ -2,15 +2,15 @@ package com.financas.api.service;
 
 import java.util.List;
 
-import com.financas.api.model.Lancamento;
+import com.financas.api.dto.LancamentoDTO;
 
 public interface LancamentoService {
 
 	public void excluir(Long id);
 
-	public List<Lancamento> listar();
+	public List<LancamentoDTO> listar();
 
-	public Lancamento salvar(Lancamento lancamento);
+	public LancamentoDTO salvar(LancamentoDTO lancamento);
 
-	public Lancamento visualizar(Long id);
+	public LancamentoDTO visualizar(Long id);
 }

@@ -5,9 +5,6 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,8 +21,8 @@ import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.financas.api.enums.StatusEnum;
-import com.financas.api.enums.TipoLancamentoEnum;
+import com.financas.api.dto.LancamentoDTO;
+import com.financas.api.utils.FinUtil;
 
 @Entity
 @Audited
@@ -38,17 +35,20 @@ public class Lancamento {
 	@Column(name = "id")
 	private Long id;
 
-	@Size(min = 3)
-	@Column(name = "descricao", columnDefinition = "text", nullable = false)
+	@Column(name = "descricao", columnDefinition = "text")
 	private String descricao;
 
+	@Size(min = 3, max = 30)
+	@Column(name = "nome", nullable = false)
+	private String nome;
+
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
 
 	@NotNull
-	@NumberFormat(style=Style.CURRENCY)
+	@NumberFormat(style = Style.CURRENCY)
 	@Column(name = "valor", nullable = false)
 	private BigDecimal valor;
 
@@ -59,81 +59,155 @@ public class Lancamento {
 	private LocalDate data;
 
 	@NotNull
-	@Column(name = "parcelado", nullable = false)
-	private boolean isParcelado;
+	@ManyToOne
+	@JoinColumn(name = "status_id", nullable = false)
+	private Status status;
 
 	@Column(name = "quantidade_parcelas")
 	private Integer qntParcelas;
 
-	@NumberFormat(style=Style.CURRENCY)
+	@NumberFormat(style = Style.CURRENCY)
 	@Column(name = "valor_parcelas")
 	private BigDecimal vlrParcelas;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "status", nullable = false)
-	private StatusEnum status;
+	@NotNull
+	@Column(name = "parcelado", nullable = false)
+	private boolean isParcelado;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo", nullable = false)
-	private TipoLancamentoEnum tipo;
+	@NotNull
+	@Column(name = "despesa", nullable = false)
+	private boolean isDespesa;
+
+	public Lancamento() {
+
+	}
+
+	public Lancamento(Long id) {
+		this.setId(id);
+	}
+
+	/**
+	 * Construtor de conversão do LancamentoDTO para o Objeto
+	 *
+	 * converterParaObjeto
+	 *
+	 * @param id
+	 * @param nome
+	 * @param descricao
+	 * @param categoriaId
+	 * @param valor
+	 * @param data
+	 * @param isParcelado
+	 * @param isDespesa
+	 * @param qntParcelas
+	 * @param vlrParcelas
+	 * @param statusId
+	 */
+	public Lancamento(Long id, String nome, String descricao, Long categoriaId, String valor, String data,
+			boolean isParcelado, boolean isDespesa, Integer qntParcelas, String vlrParcelas, Long statusId) {
+		this.setId(id);
+		this.setNome(nome);
+		this.setDescricao(descricao);
+		this.setCategoria(new Categoria(categoriaId));
+		this.setParcelado(isParcelado);
+		this.setData(FinUtil.converterStringParaLocalDate(data));
+		this.setValor(FinUtil.converterStringParaBigDecimal(valor));
+		this.setVlrParcelas(FinUtil.converterStringParaBigDecimal(vlrParcelas));
+		this.setDespesa(isDespesa);
+		this.setQntParcelas(qntParcelas);
+		this.setStatus(new Status(statusId));
+	}
+
+	public LancamentoDTO converterParaDTO() {
+		return new LancamentoDTO(this.id, this.nome, this.descricao, this.valor.toString(), this.data.toString(),
+				this.isParcelado, this.isDespesa, this.qntParcelas, this.vlrParcelas.toString(), this.categoria,
+				this.status);
+	}
 
 	public Categoria getCategoria() {
 		return this.categoria;
 	}
+
 	public LocalDate getData() {
 		return this.data;
 	}
+
 	public String getDescricao() {
 		return this.descricao;
 	}
+
 	public Long getId() {
 		return this.id;
 	}
+
+	public String getNome() {
+		return this.nome;
+	}
+
 	public Integer getQntParcelas() {
 		return this.qntParcelas;
 	}
-	public StatusEnum getStatus() {
+
+	public Status getStatus() {
 		return this.status;
 	}
-	public TipoLancamentoEnum getTipo() {
-		return this.tipo;
-	}
+
 	public BigDecimal getValor() {
 		return this.valor;
 	}
+
 	public BigDecimal getVlrParcelas() {
 		return this.vlrParcelas;
 	}
+
+	public boolean isDespesa() {
+		return this.isDespesa;
+	}
+
 	public boolean isParcelado() {
 		return this.isParcelado;
 	}
+
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	public void setDespesa(boolean isDespesa) {
+		this.isDespesa = isDespesa;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
 	public void setParcelado(boolean isParcelado) {
 		this.isParcelado = isParcelado;
 	}
+
 	public void setQntParcelas(Integer qntParcelas) {
 		this.qntParcelas = qntParcelas;
 	}
-	public void setStatus(StatusEnum status) {
+
+	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public void setTipo(TipoLancamentoEnum tipo) {
-		this.tipo = tipo;
-	}
+
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
+
 	public void setVlrParcelas(BigDecimal vlrParcelas) {
 		this.vlrParcelas = vlrParcelas;
 	}

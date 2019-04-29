@@ -3,7 +3,7 @@ package com.financas.api.enums;
 import com.financas.api.utils.FinUtil;
 
 public enum TipoLancamentoEnum implements FinEnum<Long>{
-	ENTRADA(1L), SAIDA(2L);
+	RECEITA(1L), DESPESA(2L);
 
 	public static TipoLancamentoEnum getEnumPorDescricao(String descricao) {
 		for (TipoLancamentoEnum tipoLancamentoEnum : TipoLancamentoEnum.values()) {
