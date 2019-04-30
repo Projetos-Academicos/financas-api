@@ -1,12 +1,52 @@
 package com.financas.api.utils;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import com.financas.api.enums.FinEnumUtil;
 
 public class FinUtil {
+
+	/**
+	 * Locale Brasileiro
+	 */
+	private static final Locale BRAZIL = new Locale("pt", "BR");
+
+	/**
+	 * Simbolos especificos do Real Brasileiro
+	 */
+	private static final DecimalFormatSymbols REAL = new DecimalFormatSymbols(BRAZIL);
+
+	/**
+	 * Mascara de dinheiro para Real Brasileiro
+	 */
+	public static final DecimalFormat MOEDA_REAL = new DecimalFormat("###,###,##0.00", REAL);
+
+	/**
+	 * Mascara texto com formatacao monetaria
+	 *
+	 * @param valor em BigDecimal
+	 * @return Valor em string
+	 */
+	public static String colocarMascaraReal(BigDecimal valor) {
+		return MOEDA_REAL.format(valor);
+	}
+
+	/**
+	 * Converte uma data em string
+	 *
+	 * @param data em LocalDate
+	 * @return String da data informada
+	 */
+	public static String converteDataParaString(LocalDate data) {
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String stringFormatada = data.format(formato);
+		return stringFormatada;
+	}
 
 	/**
 	 * Converte um valor decimal em String para BigDecimal
@@ -34,10 +74,8 @@ public class FinUtil {
 	/**
 	 * Metodo que retorna o valor da propriedade do enum passado
 	 *
-	 * @param enumClass
-	 *            Classe referente ao Enum
-	 * @param chavePropriedade
-	 *            Chave do enum
+	 * @param enumClass        Classe referente ao Enum
+	 * @param chavePropriedade Chave do enum
 	 * @return Valor via properties referente a chave passada
 	 */
 	public static String getValorPropriedadeEnum(Class<? extends Enum<?>> enumClass, String chavePropriedade) {
@@ -46,11 +84,10 @@ public class FinUtil {
 	}
 
 	/**
-	 * Converte a string passada para um valor decimal que utiliza o ponto (.)
-	 * como separador.
+	 * Converte a string passada para um valor decimal que utiliza o ponto (.) como
+	 * separador.
 	 *
-	 * @param valor
-	 *            String que deseja-se converter
+	 * @param valor String que deseja-se converter
 	 * @return String de valor convertida
 	 */
 	public static String retirarFormatacaoNumeroDecimal(String valor) {

@@ -119,8 +119,8 @@ public class Lancamento {
 	}
 
 	public LancamentoDTO converterParaDTO() {
-		return new LancamentoDTO(this.id, this.nome, this.descricao, this.valor.toString(), this.data.toString(),
-				this.isParcelado, this.isDespesa, this.qntParcelas, this.vlrParcelas.toString(), this.categoria,
+		return new LancamentoDTO(this.id, this.nome, this.descricao, FinUtil.colocarMascaraReal(this.valor), FinUtil.converteDataParaString(this.data),
+				this.isParcelado, this.isDespesa, this.qntParcelas, FinUtil.colocarMascaraReal(this.vlrParcelas), this.categoria,
 				this.status);
 	}
 
