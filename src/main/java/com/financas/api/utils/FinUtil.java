@@ -35,7 +35,6 @@ public class FinUtil {
 	public static String colocarMascaraReal(BigDecimal valor) {
 		return MOEDA_REAL.format(valor);
 	}
-
 	/**
 	 * Converte uma data em string
 	 *
@@ -81,6 +80,26 @@ public class FinUtil {
 	public static String getValorPropriedadeEnum(Class<? extends Enum<?>> enumClass, String chavePropriedade) {
 		FinEnumUtil finEnumUtil = new FinEnumUtil();
 		return finEnumUtil.getValorPropriedadeEnum(enumClass, chavePropriedade);
+	}
+
+	/**
+	 * Verifica se uma string é nula ou está em branco
+	 *
+	 * @param string
+	 * @return true se a string for nula ou em branco, false do contrário.
+	 */
+	public static boolean isNullOrEmpty(String string) {
+		return string == null || string.trim().isEmpty();
+	}
+
+	/**
+	 * validar se o valor passado é maior ou igual a zero
+	 *
+	 * @param valor
+	 * @return true se o valor passado não for nulo e for maior ou igual a 0.
+	 */
+	public static boolean isValorInteiroValido(Integer valor) {
+		return valor != null && valor >= 0;
 	}
 
 	/**

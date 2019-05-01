@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.financas.api.dto.LancamentoDTO;
+import com.financas.api.exception.GenericException;
 import com.financas.api.model.Lancamento;
 import com.financas.api.repository.LancamentoRepository;
+import com.financas.api.utils.FinUtil;
 
 @Service
-public class LancamentoServiceImpl implements LancamentoService{
+public class LancamentoServiceImpl implements LancamentoService {
 
 	@Autowired
 	private LancamentoRepository repository;
@@ -35,7 +37,38 @@ public class LancamentoServiceImpl implements LancamentoService{
 
 	@Override
 	public LancamentoDTO salvar(LancamentoDTO lancamentoDTO) {
-		return this.repository.save(lancamentoDTO.converterParaObjeto()).converterParaDTO();
+		LancamentoDTO lancamentoValido = new LancamentoDTO();
+
+		try {
+
+			lancamentoValido = this.validarLancamento(lancamentoDTO);
+			return this.repository.save(lancamentoValido.converterParaObjeto()).converterParaDTO();
+
+		} catch (GenericException e) {
+			e.printStackTrace();
+		}
+		return lancamentoValido;
+	}
+
+	private LancamentoDTO validarLancamento(LancamentoDTO lancamento) throws GenericException {
+
+		if (lancamento.isDespesa() && lancamento.isParcelado()) {
+			if (!FinUtil.isValorInteiroValido(lancamento.getQntParcelas())
+					|| FinUtil.isNullOrEmpty(lancamento.getVlrParcelas())) {
+				throw new GenericException("Se o lançamento for parcelado, os campos: Quantidade de parcelas e Valor de cada parcela são obrigatórios.");
+			}
+		}
+
+		if (lancamento.isDespesa() && !lancamento.isParcelado()) {
+			lancamento.setQntParcelas(null);
+			lancamento.setVlrParcelas(null);
+		}
+
+		if(!lancamento.isDespesa()) {
+			lancamento.setParcelado(false);
+		}
+
+		return lancamento;
 	}
 
 	@Override

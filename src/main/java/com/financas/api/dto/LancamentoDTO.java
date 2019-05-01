@@ -1,22 +1,39 @@
 package com.financas.api.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.financas.api.model.Categoria;
 import com.financas.api.model.Lancamento;
 import com.financas.api.model.Status;
 
 public class LancamentoDTO {
 
-	private Long id;
-	private String nome;
-	private String descricao;
-	private Long categoriaId;
-	private String valor;
-	private String data;
-	private boolean parcelado;
+	@NotNull
 	private boolean despesa;
+
+	@Size(min = 3, max = 30)
+	private String nome;
+
+	@Size(min = 3)
+	private String descricao;
+
+	@NotNull
+	private String valor;
+
+	@NotNull
+	private String data;
+
+	@NotNull
+	private Long categoriaId;
+
+	@NotNull
+	private Long statusId;
+
+	private Long id;
+	private boolean parcelado;
 	private Integer qntParcelas;
 	private String vlrParcelas;
-	private Long statusId;
 	private Categoria categoria;
 	private Status status;
 

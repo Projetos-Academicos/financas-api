@@ -112,7 +112,7 @@ public class Lancamento {
 		this.setParcelado(isParcelado);
 		this.setData(FinUtil.converterStringParaLocalDate(data));
 		this.setValor(FinUtil.converterStringParaBigDecimal(valor));
-		this.setVlrParcelas(FinUtil.converterStringParaBigDecimal(vlrParcelas));
+		this.setVlrParcelas(FinUtil.isNullOrEmpty(vlrParcelas) ? null : FinUtil.converterStringParaBigDecimal(vlrParcelas));
 		this.setDespesa(isDespesa);
 		this.setQntParcelas(qntParcelas);
 		this.setStatus(new Status(statusId));
@@ -120,8 +120,8 @@ public class Lancamento {
 
 	public LancamentoDTO converterParaDTO() {
 		return new LancamentoDTO(this.id, this.nome, this.descricao, FinUtil.colocarMascaraReal(this.valor), FinUtil.converteDataParaString(this.data),
-				this.isParcelado, this.isDespesa, this.qntParcelas, FinUtil.colocarMascaraReal(this.vlrParcelas), this.categoria,
-				this.status);
+				this.isParcelado, this.isDespesa, this.qntParcelas, this.vlrParcelas !=null ? FinUtil.colocarMascaraReal(this.vlrParcelas) : null, this.categoria,
+						this.status);
 	}
 
 	public Categoria getCategoria() {
