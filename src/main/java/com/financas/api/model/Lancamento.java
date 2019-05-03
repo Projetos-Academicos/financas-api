@@ -118,7 +118,7 @@ public class Lancamento {
 		this.setStatus(new Status(statusId));
 	}
 
-	public LancamentoDTO converterParaDTO() {
+	public LancamentoDTO converterParaDTO() {//TODO
 		return new LancamentoDTO(this.id, this.nome, this.descricao, this.valor.toString(), FinUtil.converteDataParaString(this.data),
 				this.isParcelado, this.isDespesa, this.qntParcelas, this.vlrParcelas != null ? this.vlrParcelas.toString() : null, this.categoria,
 						this.status);
