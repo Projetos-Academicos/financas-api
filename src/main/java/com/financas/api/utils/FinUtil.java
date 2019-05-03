@@ -114,6 +114,6 @@ public class FinUtil {
 		if ((valor != null) && !valor.isEmpty()) {
 			retorno = valor.replaceAll("\\.", "").replaceAll(",", ".");
 		}
-		return retorno;
+		return retorno + "00";
 	}
 }

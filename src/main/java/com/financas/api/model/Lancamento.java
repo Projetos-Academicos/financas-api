@@ -38,7 +38,7 @@ public class Lancamento {
 	@Column(name = "descricao", columnDefinition = "text")
 	private String descricao;
 
-	@Size(min = 3, max = 30)
+	@Size(min = 3)
 	@Column(name = "nome", nullable = false)
 	private String nome;
 

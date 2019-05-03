@@ -15,8 +15,25 @@ public class StatusServiceImpl implements StatusService {
 	private StatusRepository repository;
 
 	@Override
+	public void excluir(Long id) {
+		this.repository.deleteById(id);
+	}
+
+	@Override
 	public List<Status> listar() {
 		return this.repository.findAll();
 	}
+
+	@Override
+	public Status salvar(Status status) {
+		return this.repository.save(status);
+	}
+
+	@Override
+	public Status visualizar(Long id) {
+		return this.repository.findById(id).get();
+	}
+
+
 
 }
