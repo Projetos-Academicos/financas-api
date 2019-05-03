@@ -112,8 +112,8 @@ public class FinUtil {
 	public static String retirarFormatacaoNumeroDecimal(String valor) {
 		String retorno = null;
 		if ((valor != null) && !valor.isEmpty()) {
-			retorno = valor.replaceAll("\\.", "").replaceAll(",", ".");
+			retorno = valor.replaceAll(".", "").replaceAll(",", ".");
 		}
-		return retorno + "00";
+		return retorno;
 	}
 }
