@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financas.api.model.Status;
 import com.financas.api.service.StatusService;
 
-@RestController
 @CrossOrigin
+@RestController
 @RequestMapping("/status")
 public class StatusController {
 

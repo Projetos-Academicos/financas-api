@@ -11,21 +11,27 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Audited
 @Table(name = "status")
 public class Status {
 
 	@Id
+	@Getter @Setter
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_status")
 	@SequenceGenerator(name = "seq_status", sequenceName = "seq_status", allocationSize = 1)
 	@Column(name = "id")
 	private Long id;
 
 	@Size(min=3)
+	@Getter @Setter
 	@Column(name = "nome", nullable = false)
 	private String nome;
 
+	@Getter @Setter
 	@Column(name = "descricao", columnDefinition = "text")
 	private String descricao;
 
@@ -36,25 +42,4 @@ public class Status {
 	public Status(Long id) {
 		this.setId(id);
 	}
-
-
-	public String getDescricao() {
-		return this.descricao;
-	}
-	public Long getId() {
-		return this.id;
-	}
-	public String getNome() {
-		return this.nome;
-	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 }

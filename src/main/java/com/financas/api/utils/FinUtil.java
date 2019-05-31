@@ -7,8 +7,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-import com.financas.api.enums.FinEnumUtil;
-
 public class FinUtil {
 
 	/**
@@ -68,18 +66,6 @@ public class FinUtil {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate localDate = LocalDate.parse(data, formatter);
 		return localDate;
-	}
-
-	/**
-	 * Metodo que retorna o valor da propriedade do enum passado
-	 *
-	 * @param enumClass        Classe referente ao Enum
-	 * @param chavePropriedade Chave do enum
-	 * @return Valor via properties referente a chave passada
-	 */
-	public static String getValorPropriedadeEnum(Class<? extends Enum<?>> enumClass, String chavePropriedade) {
-		FinEnumUtil finEnumUtil = new FinEnumUtil();
-		return finEnumUtil.getValorPropriedadeEnum(enumClass, chavePropriedade);
 	}
 
 	/**

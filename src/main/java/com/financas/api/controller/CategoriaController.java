@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financas.api.model.Categoria;
 import com.financas.api.service.CategoriaService;
 
-@RestController
 @CrossOrigin
+@RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
 

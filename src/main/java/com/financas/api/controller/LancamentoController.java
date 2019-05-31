@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financas.api.dto.LancamentoDTO;
 import com.financas.api.service.LancamentoService;
 
-@RestController
 @CrossOrigin
+@RestController
 @RequestMapping("/lancamentos")
 public class LancamentoController {
 

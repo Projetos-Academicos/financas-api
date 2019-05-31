@@ -24,35 +24,44 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.financas.api.dto.LancamentoDTO;
 import com.financas.api.utils.FinUtil;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Audited
 @Table(name = "lancamento")
 public class Lancamento {
 
 	@Id
+	@Getter @Setter
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_lancamento")
 	@SequenceGenerator(name = "seq_lancamento", sequenceName = "seq_lancamento", allocationSize = 1)
 	@Column(name = "id")
 	private Long id;
 
+	@Getter @Setter
 	@Column(name = "descricao", columnDefinition = "text")
 	private String descricao;
 
 	@Size(min = 3)
+	@Getter @Setter
 	@Column(name = "nome", nullable = false)
 	private String nome;
 
 	@NotNull
 	@ManyToOne
+	@Getter @Setter
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
 
 	@NotNull
+	@Getter @Setter
 	@NumberFormat(style = Style.CURRENCY)
 	@Column(name = "valor", nullable = false)
 	private BigDecimal valor;
 
 	@NotNull
+	@Getter @Setter
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data", nullable = false)
@@ -60,21 +69,26 @@ public class Lancamento {
 
 	@NotNull
 	@ManyToOne
+	@Getter @Setter
 	@JoinColumn(name = "status_id", nullable = false)
 	private Status status;
 
+	@Getter @Setter
 	@Column(name = "quantidade_parcelas")
 	private Integer qntParcelas;
 
+	@Getter @Setter
 	@NumberFormat(style = Style.CURRENCY)
 	@Column(name = "valor_parcelas")
 	private BigDecimal vlrParcelas;
 
 	@NotNull
+	@Getter @Setter
 	@Column(name = "parcelado", nullable = false)
 	private boolean isParcelado;
 
 	@NotNull
+	@Getter @Setter
 	@Column(name = "despesa", nullable = false)
 	private boolean isDespesa;
 
@@ -118,98 +132,10 @@ public class Lancamento {
 		this.setStatus(new Status(statusId));
 	}
 
-	public LancamentoDTO converterParaDTO() {//TODO
+	public LancamentoDTO converterParaDTO() {
 		return new LancamentoDTO(this.id, this.nome, this.descricao, this.valor.toString(), FinUtil.converteDataParaString(this.data),
 				this.isParcelado, this.isDespesa, this.qntParcelas, this.vlrParcelas != null ? this.vlrParcelas.toString() : null, this.categoria,
 						this.status);
-	}
-
-	public Categoria getCategoria() {
-		return this.categoria;
-	}
-
-	public LocalDate getData() {
-		return this.data;
-	}
-
-	public String getDescricao() {
-		return this.descricao;
-	}
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public String getNome() {
-		return this.nome;
-	}
-
-	public Integer getQntParcelas() {
-		return this.qntParcelas;
-	}
-
-	public Status getStatus() {
-		return this.status;
-	}
-
-	public BigDecimal getValor() {
-		return this.valor;
-	}
-
-	public BigDecimal getVlrParcelas() {
-		return this.vlrParcelas;
-	}
-
-	public boolean isDespesa() {
-		return this.isDespesa;
-	}
-
-	public boolean isParcelado() {
-		return this.isParcelado;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public void setDespesa(boolean isDespesa) {
-		this.isDespesa = isDespesa;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public void setParcelado(boolean isParcelado) {
-		this.isParcelado = isParcelado;
-	}
-
-	public void setQntParcelas(Integer qntParcelas) {
-		this.qntParcelas = qntParcelas;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
-
-	public void setVlrParcelas(BigDecimal vlrParcelas) {
-		this.vlrParcelas = vlrParcelas;
 	}
 
 }

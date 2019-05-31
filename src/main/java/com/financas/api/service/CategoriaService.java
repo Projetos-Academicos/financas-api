@@ -2,15 +2,31 @@ package com.financas.api.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.financas.api.model.Categoria;
+import com.financas.api.repository.CategoriaRepository;
 
-public interface CategoriaService {
+@Service
+public class CategoriaService {
 
-	public void excluir(Long id);
+	@Autowired
+	private CategoriaRepository repository;
 
-	public List<Categoria> listar();
+	public void excluir(Long id) {
+		this.repository.deleteById(id);
+	}
 
-	public Categoria salvar(Categoria categoria);
+	public List<Categoria> listar() {
+		return this.repository.findAll();
+	}
 
-	public Categoria visualizar(Long id);
+	public Categoria salvar(Categoria categoria) {
+		return this.repository.save(categoria);
+	}
+
+	public Categoria visualizar(Long id) {
+		return this.repository.findById(id).get();
+	}
 }

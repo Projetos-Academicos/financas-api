@@ -2,15 +2,32 @@ package com.financas.api.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.financas.api.model.Status;
+import com.financas.api.repository.StatusRepository;
 
-public interface StatusService {
+@Service
+public class StatusService {
 
-	public void excluir(Long id);
+	@Autowired
+	private StatusRepository repository;
 
-	public List<Status> listar();
+	public void excluir(Long id) {
+		this.repository.deleteById(id);
+	}
 
-	public Status salvar(Status status);
+	public List<Status> listar() {
+		return this.repository.findAll();
+	}
 
-	public Status visualizar(Long id);
+	public Status salvar(Status status) {
+		return this.repository.save(status);
+	}
+
+	public Status visualizar(Long id) {
+		return this.repository.findById(id).get();
+	}
+
 }
